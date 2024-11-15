@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+
 
 
 // Tipos de datos
@@ -86,13 +86,6 @@ const proveedores = [
   "megadestrucciones"
 ].sort();
 
-const categorias = [
-  "papel", 
-  "carton", 
-  "plastico", 
-  "metal", 
-  "madera"
-].sort();
 
 const ScrapManagementSystem = () => {
   const [formData, setFormData] = useState<FormData>(initialFormState);

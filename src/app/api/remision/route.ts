@@ -1,4 +1,3 @@
-// src/app/api/remision/route.ts
 import { NextResponse } from 'next/server';
 import mysql from 'mysql2/promise';
 
@@ -10,7 +9,6 @@ export async function POST(req: Request) {
     database: process.env.DB_NAME,
   });
 
-  // Obtener una conexión del pool
   const connection = await pool.getConnection();
 
   try {
@@ -29,17 +27,14 @@ export async function POST(req: Request) {
       );
     }
 
-    // Iniciamos la transacción
     await connection.beginTransaction();
 
     try {
-      // Primero insertamos en la tabla maestra
       await connection.execute(
         `INSERT INTO remisiones_maestro (remision_key) VALUES (?)`,
         [data.remision_key]
       );
 
-      // Luego insertamos en registros_remision
       const [result] = await connection.execute(
         `INSERT INTO registros_remision (
           remision_key, fecha, proveedor_key, 
@@ -70,24 +65,27 @@ export async function POST(req: Request) {
         data: result 
       });
 
-    } catch (dbError: any) {
+    } catch (dbError) {
       await connection.rollback();
+      if (dbError instanceof Error) {
+        console.error('Database error:', dbError.message);
+      }
       throw dbError;
     }
 
-  } catch (error: any) {
-    console.error('Error detallado:', error);
-    
+  } catch (error) {
+    console.error('Detailed error:', error);
+
     return NextResponse.json(
       { 
         success: false, 
-        error: error.message || 'Error al guardar los datos',
-        details: error.sqlMessage || error.toString()
+        error: error instanceof Error ? error.message : 'Error al guardar los datos',
+details: error instanceof Error ? error.message : String(error),
       },
       { status: 500 }
     );
   } finally {
-    connection.release(); // Liberamos la conexión al pool
-    pool.end(); // Cerramos el pool
+    connection.release();
+    pool.end();
   }
 }
