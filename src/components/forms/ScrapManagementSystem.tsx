@@ -369,160 +369,185 @@ useEffect(() => {
         </TabsList>
 
         <TabsContent value="scrap">
-          <Card>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4 pt-4">
-                <div className="grid grid-cols-2 gap-4">
-                  {/* Fecha */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Fecha</label>
-                    <Input
-                      type="date"
-                      value={formData.fecha}
-                      onChange={(e) => handleInputChange('fecha', e.target.value)}
-                      required
-                    />
-                  </div>
+  <Card>
+    <CardContent>
+      <form onSubmit={handleSubmit} className="space-y-6 pt-4">
+        {/* Primera fila: Fecha y Máquina */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Fecha</label>
+            <Input
+              type="date"
+              value={formData.fecha}
+              onChange={(e) => handleInputChange('fecha', e.target.value)}
+              required
+            />
+          </div>
 
-                  {/* Máquina */}
-<div className="space-y-2">
-  <label className="text-sm font-medium">Máquina</label>
-  <Select
-    value={formData.maquina}
-    onValueChange={(value) => handleInputChange('maquina', value)}
-    required
-  >
-    <SelectTrigger>
-      <SelectValue placeholder="Seleccionar máquina" />
-    </SelectTrigger>
-    <SelectContent>
-      {machines.map((machine) => (
-        <SelectItem key={machine} value={machine}>
-          {machine}
-        </SelectItem>
-      ))}
-    </SelectContent>
-  </Select>
-</div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Máquina</label>
+            <Select
+              value={formData.maquina}
+              onValueChange={(value) => handleInputChange('maquina', value)}
+              required
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar máquina" />
+              </SelectTrigger>
+              <SelectContent>
+                {machines.map((machine) => (
+                  <SelectItem key={machine} value={machine}>
+                    {machine}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
 
-{/* Operador */}
-<div className="space-y-2">
-  <label className="text-sm font-medium">Operador</label>
-  <Select
-    value={formData.operador}
-    onValueChange={(value) => handleInputChange('operador', value)}
-    required
-  >
-    <SelectTrigger>
-      <SelectValue placeholder="Seleccionar operador" />
-    </SelectTrigger>
-    <SelectContent>
-      {operators.map((operator) => (
-        <SelectItem key={operator} value={operator}>
-          {operator}
-        </SelectItem>
-      ))}
-    </SelectContent>
-  </Select>
-</div>
+        {/* Segunda fila: Operador y Turno */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Operador</label>
+            <Select
+              value={formData.operador}
+              onValueChange={(value) => handleInputChange('operador', value)}
+              required
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar operador" />
+              </SelectTrigger>
+              <SelectContent>
+                {operators.map((operator) => (
+                  <SelectItem key={operator} value={operator}>
+                    {operator}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-{/* Turno */}
-<div className="space-y-2">
-  <label className="text-sm font-medium">Turno</label>
-  <Select
-    value={formData.turno.toString()}
-    onValueChange={(value) => handleInputChange('turno', parseInt(value))}
-    required
-  >
-    <SelectTrigger>
-      <SelectValue placeholder="Seleccionar turno" />
-    </SelectTrigger>
-    <SelectContent>
-      <SelectItem value="1">Turno 1</SelectItem>
-      <SelectItem value="2">Turno 2</SelectItem>
-      <SelectItem value="3">Turno 3</SelectItem>
-    </SelectContent>
-  </Select>
-</div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Turno</label>
+            <Select
+              value={formData.turno.toString()}
+              onValueChange={(value) => handleInputChange('turno', parseInt(value))}
+              required
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar turno" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1">Turno 1</SelectItem>
+                <SelectItem value="2">Turno 2</SelectItem>
+                <SelectItem value="3">Turno 3</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
 
-{/* Nivel 2 Mermas */}
-<div className="space-y-2">
-  <label className="text-sm font-medium">Tipo de Merma</label>
-  <Select
-    value={formData.nivel_2_mermas}
-    onValueChange={(value) => handleInputChange('nivel_2_mermas', value)}
-    required
-  >
-    <SelectTrigger>
-      <SelectValue placeholder="Seleccionar tipo de merma" />
-    </SelectTrigger>
-    <SelectContent>
-      {nivel2Mermas.map((merma) => (
-        <SelectItem key={merma} value={merma}>
-          {merma}
-        </SelectItem>
-      ))}
-    </SelectContent>
-  </Select>
-</div>
+        {/* Tercera fila: Job y Kilogramos */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Job</label>
+            <Input
+              type="number"
+              value={formData.job || ''}
+              onChange={(e) => handleInputChange('job', e.target.value ? parseInt(e.target.value) : 0)}
+              required
+            />
+          </div>
 
-{/* Nivel 1 Lean Manufacturing */}
-<div className="space-y-2">
-  <label className="text-sm font-medium">Tipo de Lean Manufacturing</label>
-  <Select
-    value={formData.nivel_1_lean_manufacturing}
-    onValueChange={(value) => handleInputChange('nivel_1_lean_manufacturing', value)}
-    required
-  >
-    <SelectTrigger>
-      <SelectValue placeholder="Seleccionar tipo de Lean" />
-    </SelectTrigger>
-    <SelectContent>
-      {nivel1Lean.map((lean) => (
-        <SelectItem key={lean} value={lean}>
-          {lean}
-        </SelectItem>
-      ))}
-    </SelectContent>
-  </Select>
-</div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Kilogramos Reportados</label>
+            <Input
+              type="number"
+              value={formData.kilogramos_reportados || ''}
+              onChange={(e) => handleInputChange('kilogramos_reportados', e.target.value ? parseFloat(e.target.value) : 0)}
+              required
+              step="0.01"
+            />
+          </div>
+        </div>
 
-{/* Nivel 3 Defectos */}
-<div className="space-y-2">
-  <label className="text-sm font-medium">Tipo de Defecto</label>
-  <Select
-    value={formData.nivel_3_defectos}
-    onValueChange={(value) => handleInputChange('nivel_3_defectos', value)}
-    required
-  >
-    <SelectTrigger>
-      <SelectValue placeholder="Seleccionar tipo de defecto" />
-    </SelectTrigger>
-    <SelectContent>
-      {nivel3Defectos.map((defecto) => (
-        <SelectItem key={defecto} value={defecto}>
-          {defecto}
-        </SelectItem>
-      ))}
-    </SelectContent>
-  </Select>
-</div>
-                </div>
+        {/* Cuarta fila: Tipo de Merma */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Tipo de Merma</label>
+          <Select
+            value={formData.nivel_2_mermas}
+            onValueChange={(value) => handleInputChange('nivel_2_mermas', value)}
+            required
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Seleccionar tipo de merma" />
+            </SelectTrigger>
+            <SelectContent>
+              {nivel2Mermas.map((merma) => (
+                <SelectItem key={merma} value={merma}>
+                  {merma}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-                <div className="flex justify-end space-x-2 mt-4">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={resetForm}
-                  >
-                    Limpiar
-                  </Button>
-                  <Button type="submit">Guardar</Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        </TabsContent>
+        {/* Quinta fila: Tipo de Lean Manufacturing */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Tipo de Lean Manufacturing</label>
+          <Select
+            value={formData.nivel_1_lean_manufacturing}
+            onValueChange={(value) => handleInputChange('nivel_1_lean_manufacturing', value)}
+            required
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Seleccionar tipo de Lean" />
+            </SelectTrigger>
+            <SelectContent>
+              {nivel1Lean.map((lean) => (
+                <SelectItem key={lean} value={lean}>
+                  {lean}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Sexta fila: Tipo de Defecto */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Tipo de Defecto</label>
+          <Select
+            value={formData.nivel_3_defectos}
+            onValueChange={(value) => handleInputChange('nivel_3_defectos', value)}
+            required
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Seleccionar tipo de defecto" />
+            </SelectTrigger>
+            <SelectContent>
+              {nivel3Defectos.map((defecto) => (
+                <SelectItem key={defecto} value={defecto}>
+                  {defecto}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Botones de acción */}
+        <div className="flex justify-end space-x-2 mt-6">
+          <Button 
+            type="button" 
+            variant="outline" 
+            onClick={resetForm}
+          >
+            Limpiar
+          </Button>
+          <Button type="submit">Guardar</Button>
+        </div>
+      </form>
+    </CardContent>
+  </Card>
+</TabsContent>
 
         <TabsContent value="remision">
   <Card>

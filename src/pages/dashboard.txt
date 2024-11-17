@@ -1,0 +1,32 @@
+// Agrega esto a tu dashboard.tsx
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/router';
+
+// Dentro de tu componente DashboardPage, agrega esta función
+const handleLogout = async () => {
+  const response = await fetch('/api/auth/logout', {
+    method: 'POST'
+  });
+  
+  if (response.ok) {
+    router.push('/login');
+  }
+};
+
+// Y modifica el return para incluir el botón de logout
+return (
+  <div className="min-h-screen bg-gray-100 py-8">
+    <div className="container mx-auto">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Sistema de Gestión de Registros</h1>
+        <Button 
+          variant="outline"
+          onClick={handleLogout}
+        >
+          Cerrar Sesión
+        </Button>
+      </div>
+      <ScrapManagementSystem />
+    </div>
+  </div>
+);
