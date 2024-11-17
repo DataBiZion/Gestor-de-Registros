@@ -12,6 +12,7 @@ export default function LoginForm() {
     password: ''
   });
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
